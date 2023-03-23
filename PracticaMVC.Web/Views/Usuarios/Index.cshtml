@@ -1,0 +1,293 @@
+﻿@model PracticaMVC.Web.ViewModels.Listado_UsuariosVM
+
+@{
+    ViewBag.Title = "Administración de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <span class="active">Usuarios</span>
+            </li>
+        </ul>
+
+        <div class="row widget-row">
+            <div class="col-md-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>Administrador de Usuarios
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+                            @using (@Html.BeginForm("Index", "Usuarios", FormMethod.Post, new { id = "myForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.PaginaActual, htmlAttributes: new { @id = "hfCurrentPage", @value = Model.PaginaActual })
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn sbold dark margin-right-10 " onclick="location.href='@Url.Action("Create")'">
+                                            Agregar
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <button name="control" type="submit" value="Buscar" class="btn sbold grey margin-right-10">
+                                            Buscar
+                                            <i class="fa fa-filter"></i>
+                                        </button>
+                                        <button type="button" class="btn sbold blue margin-right-10 " onclick="location.href='@Url.Action("ExportarExcel","Usuarios", new { usuario = Model.Usuario } )'">
+                                            Exportar
+                                            <i class="glyphicon glyphicon-export"></i>
+                                        </button>
+                                        <button type="button" class="btn sbold blue margin-right-10 " onclick="AbrirModalCargaMasiva();">
+                                            Carga Masiva
+                                            <i class="glyphicon glyphicon-import"></i>
+                                        </button>
+                                        <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "Home")'">
+                                            Regresar
+                                            <i class="fa fa-chevron-circle-left"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group form-md-line-input form-md-floating-label has-success" style="margin-bottom: 0px !important;">
+                                            <label style="font-size: small;">Filtro Usuario</label>
+                                            @Html.TextBoxFor(x => Model.Usuario, htmlAttributes: new { @class = "form-control", @id = "txtFiltroUsuario", @placeholder = "Usuario" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group form-md-line-input form-md-floating-label has-success" style="margin-bottom: 0px !important;">
+                                            <label style="font-size: small;">Filtro Usuario Select2</label>
+                                            @Html.DropDownListFor(x => Model.IdUsuario, new SelectList(Model.UsuariosDDL, "Valor", "Texto", Model.IdUsuario),
+                                                        htmlAttributes: new { @class = "form-control", @id = "ddlFiltroUsuarioSelect2" })
+                                            @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive">
+                                        <table class="table table-bordered mb-0 table-sm">
+                                            <tr class="bg-light headerCustom">
+                                                <th>
+                                                    <input name="control" type="submit" value="Usuario" form="myForm" class="btn btn-link headerCustom" />
+                                                </th>
+                                                <th>
+                                                    <input name="control" type="submit" value="Password" form="myForm"
+                                                           class="btn btn-link headerCustom" />
+                                                </th>
+                                                <th>
+                                                    <input name="control" type="submit" value="Perfil" form="myForm"
+                                                           class="btn btn-link headerCustom" />
+                                                </th>
+                                                <th>
+                                                    <input name="control" type="submit" value="Rol del Usuario" form="myForm"
+                                                           class="btn btn-link headerCustom" />
+                                                </th>
+                                                <th>
+                                                    <input name="control" type="submit" value="Estatus Registro" form="myForm"
+                                                           class="btn btn-link headerCustom" />
+                                                </th>
+                                                <th><div style="font-size:14px!important;text-align:center">Acciones</div></th>
+                                            </tr>
+
+                                            @if (Model.Listado != null && Model.Listado.Count > 0)
+                                            {
+                                                foreach (var item in Model.Listado)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Usuario)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Password)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Perfil)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.RolPerfil)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EstatusRegistro)
+                                                        </td>
+                                                        <td align="center">
+
+                                                            @if (item.IdEstatusRegistro != 1)
+                                                            {
+                                                                <button class="btn btn-xs blue btn-icon-circle tooltips" type="button"
+                                                                        data-container="body" data-toggle="tooltip" data-original-title="Reactivar"
+                                                                        onclick="if (!ShowConfirmation('¿Desea reactivar este registro?',
+                                                                        '@Url.Action("EstatusUpdate","Usuarios", new { id = item.IdUsuario })')) return false;">
+                                                                    <i class="fa fa-edit mr-0 ml-0"></i>
+                                                                </button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button class="btn btn-xs green-jungle btn-icon-circle tooltips" type="button"
+                                                                        data-container="body" data-toggle="tooltip" data-original-title="Ver Detalle"
+                                                                        onclick="location.href='@Url.Action("Details","Usuarios", new { id = item.IdUsuario })'">
+                                                                    <i class="fa fa-search mr-0 ml-0"></i>
+                                                                </button>
+
+                                                                <button class="btn btn-xs red btn-icon-circle tooltips" type="button"
+                                                                        data-container="body" data-toggle="tooltip" data-original-title="Eliminar"
+                                                                        onclick="if (!ShowConfirmation('¿Desea eliminar este registro?',
+                                                                        '@Url.Action("EstatusUpdate","Usuarios", new { id = item.IdUsuario })')) return false;">
+                                                                    <i class="fa fa-times mr-0 ml-0"></i>
+                                                                </button>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="7">
+                                                        @Html.Label("Sin información de Usuarios")
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <ul class="pagination">
+                                            @for (int i = 1; i <= Model.TotalPaginas; i++)
+                                            {
+                                                if (i != Model.PaginaActual)
+                                                {
+                                                    <li class="page-item">
+                                                        <a href="javascript:PagerClick(@i);" class="page-link">@i</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="page-item active">
+                                                        <span class="page-link">@i</span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalUsuariosPermisos">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Carga Masiva Usuarios</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (@Html.BeginForm("Details", "Usuarios", FormMethod.Post, new { id = "myFormCarga" }))
+                        {
+
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        @Html.LabelFor(model => model.CargaMasiva, htmlAttributes: new { @class = "control-label" })
+                                        <div id="queueCargaMasiva"></div>  <!--Used to show progress-->
+                                        <input id="fupCargaMasiva" name="fupCargaMasiva" type="file">
+                                        @Html.ValidationMessageFor(model => model.CargaMasivaLinkMensaje, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.CargaMasivaLinkMensaje, " ", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Select2 CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <link href="~/Content/css/GridView.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/css/Paginado.css" rel="stylesheet" type="text/css" />
+        <!-- Select2 -->
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Content/js/jquery.uploadifive.js"></script>
+    <script src="~/Content/js/jquery.mask.min.js"></script>
+    <link href="~/Content/css/uploadifive.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#CargaMasivaLinkMensaje').next('span').next('span').hide();
+
+            $("#fupCargaMasiva").uploadifive({
+                'auto': true,
+                'fileObjName': 'fileData', //The parameter name of the back-end method
+                'fileType': '*.xlsx', //File type uploaded
+                'queueID': 'queueCargaMasiva',
+                'uploadScript': '@Url.Action("UploadCargaMasiva", "Usuarios")',
+                'method': 'post',
+                'buttonText': 'Buscar un Excel', //The name of the button
+                'dnd': false,
+                'multi': false,
+                'onUploadComplete': function (file, data) {
+                    var dato = JSON.parse(data);
+                    if (dato == 'Error')
+                        $('#CargaMasivaLinkMensaje').next('span').next('span').show();
+                    else {
+                        $("#CargaMasivaLinkMensaje").val(dato);
+                        $('#CargaMasivaLinkMensaje').next('span').next('span').hide();
+                    }
+                },
+                'onQueueComplete': function (uploads) { //Callback method after all upload is successful
+                    $("#queueCargaMasiva").children().remove();
+                }
+            });
+        });
+
+        function PagerClick(index) {
+            document.getElementById("hfCurrentPage").value = index;
+            document.forms[0].submit();
+        }
+        $("#ddlFiltroUsuarioSelect2").select2({
+            placeholder: "Seleccione",
+            allowClear: true
+        });
+
+
+        function AbrirModalCargaMasiva() {
+            $("#modalUsuariosPermisos").modal();
+        }
+
+    </script>
+}

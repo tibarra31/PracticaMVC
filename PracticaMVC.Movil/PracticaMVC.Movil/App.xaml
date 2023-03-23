@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:infra="clr-namespace:PracticaMVC.Movil.Infrastructure"
+             x:Class="PracticaMVC.Movil.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Recurso que traera la clase InstanceLocator a traves de la referencia puesta en infra -->
+            <infra:InstanceLocator x:Key="Locator"/>
+            <!-- 
+                Oficina
+            
+           
+            -->
+
+            <!-- 
+                Casa
+            <x:String x:Key="UrlAPI">http://10.0.0.5/ApiPractica</x:String>
+            <x:String x:Key="UrlFolderImages">http://10.0.0.5/ApiPractica/ImagenesUsuarios/</x:String>
+            -->
+            <x:String x:Key="UrlAPI">http://192.168.1.108/ApiPracticaV2</x:String>
+            <x:String x:Key="UrlFolderImages">http://192.168.1.108/ApiPractica/ImagenesUsuarios/</x:String>
+
+            <!-- Fonts -->
+            <OnPlatform x:TypeArguments="x:String" x:Key="Raleway">
+                <On Platform="Android" Value="Raleway-Regular.ttf#Raleway Regular" />
+                <On Platform="iOS" Value="Raleway-Regular" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" x:Key="RalewayItalic">
+                <On Platform="Android" Value="Raleway-Italic.ttf#Raleway Italic" />
+                <On Platform="iOS" Value="Raleway-Italic" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" x:Key="RalewayBold">
+                <On Platform="Android" Value="Raleway-Bold.ttf#Raleway Bold" />
+                <On Platform="iOS" Value="Raleway-Bold" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" x:Key="RalewayBoldItalic">
+                <On Platform="Android" Value="Raleway-BoldItalic.ttf#Raleway BoldItalic" />
+                <On Platform="iOS" Value="Raleway-BoldItalic" />
+            </OnPlatform>
+
+            <Style x:Key="daysLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="5,2" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

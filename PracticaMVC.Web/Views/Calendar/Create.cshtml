@@ -1,0 +1,103 @@
+﻿@model PracticaMVC.Web.ViewModels.Detalle_FechasCalendarioVM
+
+@{
+    ViewBag.Title = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="@Url.Action("Index", "Calendar")">Calendario</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <span class="active">Registro Calendario</span>
+            </li>
+        </ul>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="portlet box dark">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-gift"></i>
+                                Registro Calendario
+                            </div>
+                            <div class="actions">
+                                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="form-actions ">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <button type="submit" class="btn dark margin-right-10">
+                                            Guardar
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                        <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "Calendar")';">
+                                            Regresar
+                                            <i class="fa fa-chevron-circle-left"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.IdFechaCalendario, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.IdFechaCalendario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @disabled = "disabled", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.IdUsuario, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(x => Model.IdUsuario, new SelectList(Model.Usuarios, "Valor", "Texto", Model.IdUsuario),
+                                                htmlAttributes: new { @class = "form-control", @id = "ddlUsuario" })
+                                        @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextAreaFor(model => model.Asunto, new { @class = "form-control", @autocomplete = "off" } )
+                                        @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Content/js/bootstrap-multiselect.js"></script>
+    <script src="~/Content/js/custom_multiselect.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Content/js/custom_datepicker.js"></script>
+    <script src="~/Content/js/jquery.uploadifive.js"></script>
+    <script src="~/Content/js/jquery.mask.min.js"></script>
+
+}

@@ -1,0 +1,38 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="modalUsuariosPermisos">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Permisos de Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-body">
+                    <div class="row">
+                        {{ListPermisos}}
+                        <div class="col-md-3">
+                            <label class="control-label">Permisos</label>
+                            <select ng-model="IdPermiso" class="form-control" name="Permisos"
+                                    ng-options="item.Valor as item.Texto for item in ListPermisos">
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label" style="width:100%">&nbsp;</label>
+                            <button id="BtnGuardarProductor" type="button" class="btn dark tooltips" data-container="body" data-toggle="tooltip"
+                                    data-original-title="Guardar Permiso" ng-click="GuardarPermiso();">
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             x:Class="PracticaMVC.Movil.Logout"
+             Title="Salir"
+             HasKeyboardOffset="False"
+             CloseWhenBackgroundIsClicked="True">
+    <ScrollView>
+        <AbsoluteLayout BindingContext="{Binding Logout}" Padding="50,20"
+                        HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Frame BackgroundColor="Chocolate" AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional" CornerRadius="0">
+                <StackLayout>
+                    <Label Text="X" BackgroundColor="#fff" HeightRequest="24" WidthRequest="24" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                           HorizontalOptions="End" FontSize="9">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CerrarCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="PERFIL DE USUARIO" TextColor="#fefefe" FontSize="16" FontAttributes="Bold" FontFamily="{StaticResource RalewayBold}"
+                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="20,0"/>
+                    <Button x:Name="btnEnviar" Text="Cerrar sesión" TextColor="#fff" CornerRadius="2" FontSize="12" FontFamily="{StaticResource Raleway}" HeightRequest="40"
+                        BorderColor="#ffffff" BorderWidth="1" BackgroundColor="BurlyWood" Margin="30,15,30,10" Command="{Binding CerrarSesionCommand}" />
+                </StackLayout>
+            </Frame>
+        </AbsoluteLayout>
+    </ScrollView>
+</pages:PopupPage>

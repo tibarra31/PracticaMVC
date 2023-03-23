@@ -1,0 +1,108 @@
+﻿@model PracticaMVC.Web.ViewModels.Listado_UsuariosVM
+
+@{
+    ViewBag.Title = "Administración de Usuarios - Graficas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .ocultaDiv{
+        display:none !important
+    }
+    .muestraDiv {
+        display: none !important
+    }
+</style>
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <span class="active">Usuarios</span>
+            </li>
+        </ul>
+
+        <div class="row widget-row">
+            <div class="col-md-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>Administrador de Usuarios - Vista Gráficas
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn sbold dark margin-right-10 " onclick="MostrarGrafica('pie','prueba pie','prueba pie')">
+                                            Gráfica Pastel
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button name="button" class="btn sbold dark margin-right-10" onclick="MostrarGrafica('line','prueba lineal','prueba lineal')">
+                                            Gráfica Barras
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row"><br /><br /></div>
+                                <div class="col-md-8" id="divGrafica">
+                                    
+                                </div>
+                                <div class="row"><br /></div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/Content/js/echarts.min.js"></script>
+
+
+    </div>
+</div>
+
+@section scripts
+{ 
+    <script type="text/javascript">
+        var jsonServie = "";
+
+        function MostrarGrafica(type_, title_, tooltip_) {
+            $('#echarts_bar').remove();
+            $('#divGrafica').append('<div id="echarts_bar" class="col-md-12" style="height: 500px;"> </div>');
+            var myChart = myChart = echarts.init(document.getElementById('echarts_bar'))
+            //myChart.Dispose();
+            var url = '@Url.Action("ShowGraphic", "Usuarios")';
+            $.ajax({
+                type: "POST", 
+                url: url,
+                data: { type: type_, title: title_, tooltip: tooltip_},
+                success: function (response) {
+                    jsonServie = response;
+                    myChart.setOption($.parseJSON(jsonServie), true);
+                    myChart.resize();
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+
+        window.addEventListener('resize', function (event) {
+            if (jsonServie == "") {
+                return;
+            } 
+            myChart = echarts.init(document.getElementById('echarts_bar'));
+            myChart.setOption($.parseJSON(jsonServie), false);
+            myChart.resize();
+        });
+ 
+
+
+    </script>
+}

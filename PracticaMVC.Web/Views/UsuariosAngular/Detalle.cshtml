@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Administración de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrapper"  ng-controller="ctrlUsuarios">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="@Url.Action("Index", "UsuariosAngular")">{{titulo}}</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <span class="active">{{tituloRegistro}}</span>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i>
+                            {{tituloRegistro}}
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="form-actions ">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button class="btn dark margin-right-10" ng-click="GuardarUsuario();">
+                                        Guardar
+                                        <i class="fa fa-save"></i>
+                                    </button>
+                                    <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "UsuariosAngular")';">
+                                        Regresar
+                                        <i class="fa fa-chevron-circle-left"></i>
+                                    </button>
+                                    <button id="btnPermisosUsuario" class="btn default" type="button" ng-click="AbrirModalUsuariosPermisos();">
+                                        Permisos Usuario
+                                        <i class="glyphicon glyphicon-lock"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Id Usuario</label>
+                                    <input type="text" id="idUsuario" class="form-control" ng-model="ObjUsuarios.IdUsuario" readonly />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Usuario</label>
+                                    <input type="text" id="idUsuario" class="form-control" ng-model="ObjUsuarios.Usuario" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Password</label>
+                                    <input type="text" id="idUsuario" class="form-control" ng-model="ObjUsuarios.Password" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Perfil</label>
+                                    <select ng-model="ObjUsuarios.IdPerfil" class="form-control" name="Perfil"
+                                            ng-options="item.Valor as item.Texto for item in ListPerfiles" ng-change="llenaComboRolesPerfiles();">
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Roles Perfil</label>
+                                    <select ng-model="ObjUsuarios.IdPerfilRol" class="form-control" name="Roles Perfiles"
+                                            ng-options="item.Valor as item.Texto for item in ListPerfilesRoles">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row"><br /></div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10 table-responsive" style=" overflow-x:hidden;overflow-y:auto;">
+                                    <div class="gridStyle" ng-grid="gridPermisos"></div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <sm-Modal name="modalUsuariosPermisos" titulo="Permisos " width="200px">
+        <div style="height: 200px;" > 
+            <div class="col-md-9">
+                <label class="control-label">Permisos</label>
+                <select ng-model="IdPermiso" class="form-control" name="Permisos"
+                        ng-options="item.Valor as item.Texto for item in ListPermisos">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="control-label" style="width:100%">&nbsp;</label>
+                <button id="BtnGuardarProductor" type="button" class="btn dark tooltips" data-container="body" data-toggle="tooltip"
+                        data-original-title="Guardar Permiso" ng-click="GuardarPermiso();">
+                    <i class="fa fa-save"></i>
+                </button>
+            </div>
+        </div>
+    </sm-Modal>
+
+        @*<div class="modal fade" tabindex="-1" role="dialog" id="modalUsuariosPermisos">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Permisos de Usuario</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-body">
+                            <div class="row">
+                                {{ListPermisos}}
+                                <div class="col-md-3">
+                                    <label class="control-label">Permisos</label>
+                                    <select ng-model="IdPermiso" class="form-control" name="Permisos"
+                                            ng-options="item.Valor as item.Texto for item in ListPermisos">
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label" style="width:100%">&nbsp;</label>
+                                    <button id="BtnGuardarProductor" type="button" class="btn dark tooltips" data-container="body" data-toggle="tooltip"
+                                            data-original-title="Guardar Permiso" ng-click="GuardarPermiso();">
+                                        <i class="fa fa-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+</div>
+
+@section scripts
+{
+    <script src="~/ClientApp/controllerUsuarios.js"></script>
+    <script src="~/Content/js/bootstrap-multiselect.js"></script>
+    <script src="~/Content/js/custom_multiselect.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Content/js/custom_datepicker.js"></script>
+    <script src="~/Content/js/jquery.uploadifive.js"></script>
+    <script src="~/Content/js/jquery.mask.min.js"></script>
+
+
+}

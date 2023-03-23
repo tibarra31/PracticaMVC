@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "293418478583",
+    "project_id": "practicamvc-xamarin",
+    "storage_bucket": "practicamvc-xamarin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293418478583:android:277dd1f6a6a53f68659cf2",
+        "android_client_info": {
+          "package_name": "com.companyname.practicamvc.movil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293418478583-6g37af50t0flq4ctbn2ucrnce3e0u3uv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg1B1GluztYAclYQR_QreQchuEZoROVBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293418478583-6g37af50t0flq4ctbn2ucrnce3e0u3uv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

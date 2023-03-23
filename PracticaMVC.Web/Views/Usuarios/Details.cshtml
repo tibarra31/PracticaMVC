@@ -1,0 +1,268 @@
+﻿@model PracticaMVC.Web.ViewModels.Detalle_UsuariosVM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="@Url.Action("Index", "Usuarios")">Usuarios</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <span class="active">Registro de Usuario</span>
+            </li>
+        </ul>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="portlet box dark">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-gift"></i>
+                                Registro de Usuario
+                            </div>
+                            <div class="actions">
+                                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="form-actions ">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <button type="submit" class="btn dark margin-right-10">
+                                            Guardar
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                        <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "Usuarios")';">
+                                            Regresar
+                                            <i class="fa fa-chevron-circle-left"></i>
+                                        </button>
+                                        <button id="btnPermisosUsuario" class="btn default" type="button" onclick="AbrirModalUsuariosPermisos();">
+                                            Permisos Usuario
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.IdUsuario, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.IdUsuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.IdPerfil, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(x => Model.IdPerfil, new SelectList(Model.Perfiles, "Valor", "Texto", Model.IdPerfil),
+                                                htmlAttributes: new { @class = "form-control", @id = "ddlPerfiles", @onchange = "GetPerfilesRoles(this.value)" })
+                                        @Html.ValidationMessageFor(model => model.IdPerfil, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.IdPerfilRol, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(x => Model.IdPerfilRol, new SelectList(Model.PerfilesRoles, "Valor", "Texto", Model.IdPerfilRol),
+                                            htmlAttributes: new { @class = "form-control", @id = "ddlPerfilesRoles" })
+                                        @Html.ValidationMessageFor(model => model.IdPerfilRol, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-actions ">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <button type="submit" class="btn dark margin-right-10">
+                                                    Asignar Personal
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive" style="height:40vh !important; overflow-x:hidden;overflow-y:auto;">
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                                <tr class="bg-light text-center headerlink">
+                                                    <th style="display:none;">
+                                                        @Html.DisplayNameFor(model => model.Listado_Permisos[0].IdPermiso)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Listado_Permisos[0].Permiso)
+                                                    </th>
+                                                    <th style="width:10%;text-align:center">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="listadoUsuarioPermisos">
+                                                @Html.Partial("ModalPermisos", Model.Listado_Permisos)
+                                            </tbody>
+                                        </table>
+                                        @Html.ValidationMessageFor(model => Model.Listado_Permisos, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" name="modalUsuariosPermisos" id="modalUsuariosPermisos">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Permisos de Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (@Html.BeginForm("Details", "Usuarios", FormMethod.Post, new { id = "myForm" }))
+                {
+                    @Html.HiddenFor(model => model.IdPermisoUsuario)
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-body">
+                        <div class="row">
+                            @Html.Partial("PermisosUsuario", Model.permisosUsuario)
+                        </div>
+                        <div class="row">
+                            <br />
+                        </div>
+                        
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Content/js/bootstrap-multiselect.js"></script>
+    <script src="~/Content/js/custom_multiselect.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/js/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Content/js/custom_datepicker.js"></script>
+    <script src="~/Content/js/jquery.uploadifive.js"></script>
+    <script src="~/Content/js/jquery.mask.min.js"></script>
+
+    <script language="javascript" type="text/javascript">
+
+        function GuardarPermiso() {
+            var _permiso = $('#ddlPermiso').val().trim();
+            var error = false;
+
+            if (_permiso == '') {
+                $('#ddlPermiso').next('span').show();
+                error = true;
+            }
+            else if (_permiso == '0') {
+                $('#ddlPermiso').next('span').show();
+                error = true;
+            }
+            else {
+                $('#ddlPermiso').next('span').hide();
+            }
+
+            if (error)
+                return;
+
+            var url = '@Url.Action("InsertPermiso", "Usuarios")';
+
+            $.ajax({
+                data: $("#myForm").serialize(),
+                type: "POST",
+                url: url,
+                success: function (partialView) {
+                    $("#listadoUsuarioPermisos").html(partialView);
+                    $('#ddlPermiso').val("0");
+                    console.log($("#myForm").serialize());
+                },
+                error: function (reponse) {
+                    console.log(reponse);
+                }
+            });
+        }
+
+        function DeletePermisoUsuario(idPermisoUsuario_) {
+
+            var url = '@Url.Action("DeletePermisoUsuario", "Usuarios")';
+
+            $.ajax({
+                data: { IdPermisoUsuario: idPermisoUsuario_ },
+                type: "POST",
+                url: url,
+                success: function (partialView) {
+                    $("#listadoUsuarioPermisos").html(partialView);
+                },
+                error: function (reponse) {
+                    console.log(reponse);
+                }
+            });
+        }
+
+
+        function AbrirModalUsuariosPermisos() {
+            $("#modalUsuariosPermisos").modal();
+        }
+
+        function GetPerfilesRoles(_IdPerfil) {
+            var url = '@Url.Action("GetRolesByPerfil", "Usuarios")';
+            $.ajax({
+                url: url,
+                data: { idPerfil: _IdPerfil },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Valor + ">" + data[x].Texto + "</option>";
+                    }
+                    $("#ddlPerfilesRoles").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+    </script>
+}

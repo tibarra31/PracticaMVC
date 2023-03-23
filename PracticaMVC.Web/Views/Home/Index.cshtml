@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/cubeportfolio.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/css/portfolio.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/css/custom.css" />
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <h1 class="page-title">
+            Pantalla de Inicio
+            <small>Módulo de Contenido</small>
+        </h1>
+
+        <div class="portfolio-content portfolio-1" style="margin-bottom: 60px;">
+            <div id="js-filters-juicy-projects" class="cbp-l-filters-button">
+                <div data-filter="*" class="cbp-filter-item-active cbp-filter-item btn dark btn-outline uppercase">
+                    Todos
+                    <div class="cbp-filter-counter"></div>
+                </div>
+                <div data-filter=".admin" class="cbp-filter-item btn dark btn-outline uppercase">
+                    Administración
+                    <div class="cbp-filter-counter"></div>
+                </div>
+                <div data-filter=".operacion" class="cbp-filter-item btn dark btn-outline uppercase">
+                    Opciones
+                    <div class="cbp-filter-counter"></div>
+                </div>
+            </div>
+
+            <div id="js-grid-juicy-projects" class="cbp">
+                <div class="cbp-item admin">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <div class="panelapp gradiente2">
+                                <div class="panelappic">
+                                    <center>
+                                        <img src="~/Content/images/usuarios.png" style="height:55px;width:55px;">
+                                    </center>
+                                </div>
+                                <div class="panelapptitulo">
+                                    USUARIOS
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cbp-caption-activeWrap" style="width: 80%; border-radius: 0px 0px 15px 15px;">
+                            <div class="cbp-l-caption-alignCenter" style="width: 100%;">
+                                <div class="cbp-l-caption-body" style="width: 100%;">
+                                    <a href="@Url.Action("Index", "Usuarios")"
+                                       class="cbp-l-caption-buttonLeft btn gray uppercase btn gray uppercase" rel="nofollow">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cbp-item admin">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <div class="panelapp gradiente2">
+                                <div class="panelappic">
+                                    <center>
+                                        <img src="~/Content/images/usuarios.png" style="height:55px;width:55px;">
+                                    </center>
+                                </div>
+                                <div class="panelapptitulo">
+                                    USUARIOS (con Angular)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cbp-caption-activeWrap" style="width: 80%; border-radius: 0px 0px 15px 15px;">
+                            <div class="cbp-l-caption-alignCenter" style="width: 100%;">
+                                <div class="cbp-l-caption-body" style="width: 100%;">
+                                    <a href="@Url.Action("Index", "UsuariosAngular")"
+                                       class="cbp-l-caption-buttonLeft btn gray uppercase btn gray uppercase" rel="nofollow">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cbp-item admin">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <div class="panelapp gradiente2">
+                                <div class="panelappic">
+                                    <center>
+                                        <img src="~/Content/images/usuarios.png" style="height:55px;width:55px;">
+                                    </center>
+                                </div>
+                                <div class="panelapptitulo">
+                                    USUARIOS EDITABLES
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cbp-caption-activeWrap" style="width: 80%; border-radius: 0px 0px 15px 15px;">
+                            <div class="cbp-l-caption-alignCenter" style="width: 100%;">
+                                <div class="cbp-l-caption-body" style="width: 100%;">
+                                    <a href="@Url.Action("IndexEdit", "Usuarios")"
+                                       class="cbp-l-caption-buttonLeft btn gray uppercase btn gray uppercase" rel="nofollow">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cbp-item admin">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <div class="panelapp gradiente2">
+                                <div class="panelappic">
+                                    <center>
+                                        <img src="~/Content/images/usuarios.png" style="height:55px;width:55px;">
+                                    </center>
+                                </div>
+                                <div class="panelapptitulo">
+                                    Graficas
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cbp-caption-activeWrap" style="width: 80%; border-radius: 0px 0px 15px 15px;">
+                            <div class="cbp-l-caption-alignCenter" style="width: 100%;">
+                                <div class="cbp-l-caption-body" style="width: 100%;">
+                                    <a href="@Url.Action("ViewGraphs", "Usuarios")"
+                                       class="cbp-l-caption-buttonLeft btn gray uppercase btn gray uppercase" rel="nofollow">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cbp-item admin">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <div class="panelapp gradiente2">
+                                <div class="panelappic">
+                                    <center>
+                                        <img src="~/Content/images/usuarios.png" style="height:55px;width:55px;">
+                                    </center>
+                                </div>
+                                <div class="panelapptitulo">
+                                    Calendario
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cbp-caption-activeWrap" style="width: 80%; border-radius: 0px 0px 15px 15px;">
+                            <div class="cbp-l-caption-alignCenter" style="width: 100%;">
+                                <div class="cbp-l-caption-body" style="width: 100%;">
+                                    <a href="@Url.Action("Index", "Calendar")"
+                                       class="cbp-l-caption-buttonLeft btn gray uppercase btn gray uppercase" rel="nofollow">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="~/Content/js/jquery.cubeportfolio.min.js" defer></script>
+    <script type="text/javascript" src="~/Content/js/portfolio-1.js" defer></script>
+}

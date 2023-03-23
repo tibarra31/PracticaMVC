@@ -1,0 +1,176 @@
+﻿@model PracticaMVC.Web.ViewModels.Listado_UsuariosVM
+
+@{
+    ViewBag.Title = "Administración de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.Listado, canPage: true, canSort: true, rowsPerPage: 20);
+}
+ 
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <span class="active">Usuarios</span>
+            </li>
+        </ul>
+
+        <div class="row widget-row">
+            <div class="col-md-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>Administrador de Usuarios
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+                            @using (@Html.BeginForm("Index", "Usuarios", FormMethod.Post, new { id = "myForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.PaginaActual, htmlAttributes: new { @id = "hfCurrentPage", @value = Model.PaginaActual })
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button name="control" type="submit" value="Buscar" class="btn sbold grey margin-right-10">
+                                            Buscar
+                                            <i class="fa fa-filter"></i>
+                                        </button>
+                                        <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "Home")'">
+                                            Regresar
+                                            <i class="fa fa-chevron-circle-left"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group form-md-line-input form-md-floating-label has-success" style="margin-bottom: 0px !important;">
+                                            <label style="font-size: small;">Filtro Usuario</label>
+                                            @Html.TextBoxFor(x => Model.Usuario, htmlAttributes: new { @class = "form-control", @id = "txtFiltroUsuario", @placeholder = "Usuario" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive">
+                                        @webGrid.Table(
+                                            headerStyle: "bg-light headerCustom",
+                                            tableStyle: "table table-bordered mb-0 table-sm",
+                                            columns: webGrid.Columns(
+                                                webGrid.Column(columnName: "Usuario", header:"Usuario", format:@<text><div class="edit" data-id="@item.IdUsuario" data-propertyname="Usuario">@item.Usuario</div></text>),
+                                                webGrid.Column(columnName: "Password", header: "Password", format:@<text><div class="edit" data-id="@item.IdUsuario" data-propertyname="Password">@item.Password</div></text>),
+                                                webGrid.Column(columnName: "Perfil", header: "Perfil", format:@<text><div class="editable-select" data-id="@item.IdUsuario" data-idPerfil="@item.IdPerfil" data-propertyname="Perfil">@item.Perfil</div></text>)
+                                            )
+                                        )
+                                    </div>
+                                </div>
+
+                                @Html.Hidden("dir", webGrid.SortDirection)
+                                @Html.Hidden("col", webGrid.SortColumn)
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+        <link href="~/Content/css/GridView.css" rel="stylesheet" type="text/css" />
+        <!-- Select2 -->
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Content/js/jquery.uploadifive.js"></script>
+    <script src="~/Content/js/jquery.mask.min.js"></script>
+    <script src="~/Scripts/jquery.jeditable.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $(".editable-select").editable("/Usuarios/SaveChanges", {
+                type: "select",
+                loadurl: '/Usuarios/GetPerfiles_DDL',
+                loadtype: "POST",
+                // this data will be sorted by value
+                loaddata: function (value, settings) {
+                    console.log($(this).data('idperfil')); 
+                    return { selectedValue: $(this).data('idperfil') };
+                },
+                submitdata: function () {
+                    return {
+                        id: $(this).data('id'),
+                        PropertyName: $(this).data('propertyname')
+                    }
+                },
+                callback: function (value, settings) {
+                    var jsonData = $.parseJSON(value);
+                    if (jsonData.status) {
+                        $(this).text(jsonData.value);
+                    }
+                    else {
+                        $(this).text(oldValue);
+                    }
+                },
+                style: "inherit",
+            });
+
+
+            var oldValue = '';
+            $('.edit').editable('/Usuarios/SaveChanges', {
+                cssclass: 'jeditForm',
+                tooltip: '',
+                width: 'none',
+                height: 'none',
+                onsubmit: function (settings, original) {
+                    oldValue = original.revert;
+                    console.log("entra")
+
+                },
+                submitdata: function () {
+                    return {
+                        id: $(this).data('id'),
+                        PropertyName: $(this).data('propertyname')
+                    }
+                },
+                callback: function (value, settings) {
+                    var jsonData = $.parseJSON(value);
+                    if (jsonData.status) {
+                        $(this).text(jsonData.value);
+                    }
+                    else {
+                        $(this).text(oldValue);
+                    }
+                }
+            })
+        });
+
+
+
+
+        $("tfoot a").addClass('btn btn-default'); // add bootstrap buttons
+
+        // add active bootstrap button
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class="btn btn-primary" />');
+
+
+    </script>
+}
+

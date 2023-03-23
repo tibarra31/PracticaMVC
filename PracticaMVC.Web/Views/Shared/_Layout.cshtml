@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  ng-app="app" >
+<head>
+    <meta charset="utf-8" />
+    <title>Practica MVC</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="PracticaMVC" name="description" />
+    <meta content="PracticaMVC" name="author" />
+
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/bootstrap-switch.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/components-md.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/themes/grey.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/toastr.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
+    <link href="~/Content/css/ng-grid.css" rel="stylesheet" />
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md" data-bind="nextFieldOnEnter:true">
+    <div class="page-wrapper">
+        <div class="page-header navbar navbar-fixed-top">
+            <div class="page-header-inner">
+                <div class="page-logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/images/logoBS_blanco_small.png" alt="logo" class="logo-default img-responsive"
+                             style="margin-top: 10pt;" />
+                    </a>
+                    <div class="menu-toggler sidebar-toggler">
+                    </div>
+                </div>
+
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img alt="" class="img-circle" src="~/Content/images/avatar.png" />
+                                <span class="username username-hide-on-mobile">
+                                    @if (HttpContext.Current.Session["UserLogin"] != null)
+                                    {
+                                        @Html.Label(((PracticaMVC.EN.Usuarios)HttpContext.Current.Session["UserLogin"]).Usuario)
+                                    }
+                                    else
+                                    {
+                                        Response.Redirect("~/Home/Login");
+                                    }
+                                </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="@Url.Action("Login", "Home")"><i class="icon-key"></i>Salir</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="page-container">
+            <div class="page-sidebar-wrapper">
+                <div class="page-sidebar navbar-collapse collapse">
+                    <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                        <li class="nav-item start ">
+                            <a href="@Url.Action("Index", "Home")" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">Inicio</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item show">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-settings"></i>
+                                <span class="title">Administración</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+
+                                <li class="nav-item show">
+                                    <a href="@Url.Action("Index", "Usuarios")" class="nav-link">
+                                        <span class="title">Usuarios</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>*@
+
+    <script src="~/Content/js/app.min.js"></script>
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/js.cookie.min.js"></script>
+    <script src="~/Content/js/bootstrap-switch.min.js"></script>
+    <script src="~/Content/js/toastr.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/ui-toastr.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/layout.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/quick-sidebar.min.js"></script>
+    <script src="~/Content/js/quick-nav.min.js"></script>
+    <script src="~/Content/js/Notifications.js" type="text/javascript"></script>
+    <script src="~/Content/js/bootbox.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+    <script src="~/Scripts/ng-grid.js"></script> 
+    <script src="~/ClientApp/directivas.js"></script>
+    <script src="~/Content/js/angular-route.min.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+    <!-- Añadirlo después de la librería toastr -->
+    @Html.Partial("_Messages", (Dictionary<string, string[]>)TempData["messages"])
+    @RenderSection("scripts", required: false)
+</body>
+</html>

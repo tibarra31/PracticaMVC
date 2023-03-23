@@ -1,0 +1,688 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PracticaMVC_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EstatusRegistros">
+          <Key>
+            <PropertyRef Name="IdEstatusRegistro" />
+          </Key>
+          <Property Name="IdEstatusRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EstatusRegistro" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FechasCalendario">
+          <Key>
+            <PropertyRef Name="IdFechaCalendario" />
+          </Key>
+          <Property Name="IdFechaCalendario" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Asunto" Type="varchar(max)" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Notificaciones_Usuarios">
+          <Key>
+            <PropertyRef Name="IdNotificacion" />
+          </Key>
+          <Property Name="IdNotificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuarioGeneroNotif" Type="int" />
+          <Property Name="IdUsuarioRecibeNotif" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Mensaje" Type="varchar" MaxLength="150" />
+          <Property Name="Leido" Type="bit" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="IdPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Perfil" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PerfilesRoles">
+          <Key>
+            <PropertyRef Name="IdPerfilRol" />
+          </Key>
+          <Property Name="IdPerfilRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPerfil" Type="int" />
+          <Property Name="PerfilRol" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="IdPermiso" />
+          </Key>
+          <Property Name="IdPermiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Permiso" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="150" />
+          <Property Name="Password" Type="varchar" MaxLength="150" />
+          <Property Name="IdPerfil" Type="int" />
+          <Property Name="IdPerfilRol" Type="int" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="IdEstatusRegistro" Type="int" />
+          <Property Name="ImagenUsuario" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios_Permisos">
+          <Key>
+            <PropertyRef Name="IdUsuarioPermiso" />
+          </Key>
+          <Property Name="IdUsuarioPermiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdPermiso" Type="int" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Usuarios_Visitados">
+          <Key>
+            <PropertyRef Name="IdUsuariosVisitados" />
+          </Key>
+          <Property Name="IdUsuariosVisitados" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="NumVisitas" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_FechasCalendario_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="FechasCalendario" Type="Self.FechasCalendario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FechasCalendario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificaciones_Usuarios_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Notificaciones_Usuarios" Type="Self.Notificaciones_Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Notificaciones_Usuarios">
+              <PropertyRef Name="IdUsuarioGeneroNotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificaciones_Usuarios_Usuarios1">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Notificaciones_Usuarios" Type="Self.Notificaciones_Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Notificaciones_Usuarios">
+              <PropertyRef Name="IdUsuarioRecibeNotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PerfilesRoles_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfiles" Multiplicity="0..1" />
+          <End Role="PerfilesRoles" Type="Self.PerfilesRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="PerfilesRoles">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_EstatusRegistros">
+          <End Role="EstatusRegistros" Type="Self.EstatusRegistros" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstatusRegistros">
+              <PropertyRef Name="IdEstatusRegistro" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdEstatusRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfiles" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_PerfilesRoles">
+          <End Role="PerfilesRoles" Type="Self.PerfilesRoles" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PerfilesRoles">
+              <PropertyRef Name="IdPerfilRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdPerfilRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Permisos_Permisos">
+          <End Role="Permisos" Type="Self.Permisos" Multiplicity="0..1" />
+          <End Role="Usuarios_Permisos" Type="Self.Usuarios_Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="IdPermiso" />
+            </Principal>
+            <Dependent Role="Usuarios_Permisos">
+              <PropertyRef Name="IdPermiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Permisos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Usuarios_Permisos" Type="Self.Usuarios_Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios_Permisos">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Visito_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Usuarios_Visitados" Type="Self.Usuarios_Visitados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios_Visitados">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PracticaMVC_ModelStoreContainer">
+          <EntitySet Name="EstatusRegistros" EntityType="Self.EstatusRegistros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FechasCalendario" EntityType="Self.FechasCalendario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notificaciones_Usuarios" EntityType="Self.Notificaciones_Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfiles" EntityType="Self.Perfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PerfilesRoles" EntityType="Self.PerfilesRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios_Permisos" EntityType="Self.Usuarios_Permisos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios_Visitados" EntityType="Self.Usuarios_Visitados" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FechasCalendario_Usuarios" Association="Self.FK_FechasCalendario_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="FechasCalendario" EntitySet="FechasCalendario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificaciones_Usuarios_Usuarios" Association="Self.FK_Notificaciones_Usuarios_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Notificaciones_Usuarios" EntitySet="Notificaciones_Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificaciones_Usuarios_Usuarios1" Association="Self.FK_Notificaciones_Usuarios_Usuarios1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Notificaciones_Usuarios" EntitySet="Notificaciones_Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PerfilesRoles_Perfiles" Association="Self.FK_PerfilesRoles_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="PerfilesRoles" EntitySet="PerfilesRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_EstatusRegistros" Association="Self.FK_Usuarios_EstatusRegistros">
+            <End Role="EstatusRegistros" EntitySet="EstatusRegistros" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="Self.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_PerfilesRoles" Association="Self.FK_Usuarios_PerfilesRoles">
+            <End Role="PerfilesRoles" EntitySet="PerfilesRoles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Permisos_Permisos" Association="Self.FK_Usuarios_Permisos_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="Usuarios_Permisos" EntitySet="Usuarios_Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Permisos_Usuarios" Association="Self.FK_Usuarios_Permisos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Permisos" EntitySet="Usuarios_Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Visito_Usuarios" Association="Self.FK_Usuarios_Visito_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Visitados" EntitySet="Usuarios_Visitados" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PracticaMVC_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PracticaMVC_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EstatusRegistros" EntityType="PracticaMVC_Model.EstatusRegistros" />
+          <EntitySet Name="Perfiles" EntityType="PracticaMVC_Model.Perfiles" />
+          <EntitySet Name="PerfilesRoles" EntityType="PracticaMVC_Model.PerfilesRoles" />
+          <EntitySet Name="Permisos" EntityType="PracticaMVC_Model.Permisos" />
+          <EntitySet Name="Usuarios_Permisos" EntityType="PracticaMVC_Model.Usuarios_Permisos" />
+          <AssociationSet Name="FK_PerfilesRoles_Perfiles" Association="PracticaMVC_Model.FK_PerfilesRoles_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="PerfilesRoles" EntitySet="PerfilesRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Permisos_Permisos" Association="PracticaMVC_Model.FK_Usuarios_Permisos_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="Usuarios_Permisos" EntitySet="Usuarios_Permisos" />
+          </AssociationSet>
+          <EntitySet Name="Usuarios_Visitados" EntityType="PracticaMVC_Model.Usuarios_Visitados" />
+          <EntitySet Name="FechasCalendario" EntityType="PracticaMVC_Model.FechasCalendario" />
+          <EntitySet Name="Notificaciones_Usuarios" EntityType="PracticaMVC_Model.Notificaciones_Usuarios" />
+          <EntitySet Name="sysdiagrams" EntityType="PracticaMVC_Model.sysdiagrams" />
+          <EntitySet Name="Usuarios" EntityType="PracticaMVC_Model.Usuarios" />
+          <AssociationSet Name="FK_Usuarios_EstatusRegistros" Association="PracticaMVC_Model.FK_Usuarios_EstatusRegistros">
+            <End Role="EstatusRegistros" EntitySet="EstatusRegistros" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FechasCalendario_Usuarios" Association="PracticaMVC_Model.FK_FechasCalendario_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="FechasCalendario" EntitySet="FechasCalendario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificaciones_Usuarios_Usuarios" Association="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Notificaciones_Usuarios" EntitySet="Notificaciones_Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notificaciones_Usuarios_Usuarios1" Association="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Notificaciones_Usuarios" EntitySet="Notificaciones_Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="PracticaMVC_Model.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_PerfilesRoles" Association="PracticaMVC_Model.FK_Usuarios_PerfilesRoles">
+            <End Role="PerfilesRoles" EntitySet="PerfilesRoles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Permisos_Usuarios" Association="PracticaMVC_Model.FK_Usuarios_Permisos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Permisos" EntitySet="Usuarios_Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Visito_Usuarios" Association="PracticaMVC_Model.FK_Usuarios_Visito_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Visitados" EntitySet="Usuarios_Visitados" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EstatusRegistros">
+          <Key>
+            <PropertyRef Name="IdEstatusRegistro" />
+          </Key>
+          <Property Name="IdEstatusRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EstatusRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Usuarios_EstatusRegistros" FromRole="EstatusRegistros" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PerfilesRoles" Relationship="PracticaMVC_Model.FK_PerfilesRoles_Perfiles" FromRole="Perfiles" ToRole="PerfilesRoles" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Usuarios_Perfiles" FromRole="Perfiles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="PerfilesRoles">
+          <Key>
+            <PropertyRef Name="IdPerfilRol" />
+          </Key>
+          <Property Name="IdPerfilRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPerfil" Type="Int32" />
+          <Property Name="PerfilRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Perfiles" Relationship="PracticaMVC_Model.FK_PerfilesRoles_Perfiles" FromRole="PerfilesRoles" ToRole="Perfiles" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Usuarios_PerfilesRoles" FromRole="PerfilesRoles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="IdPermiso" />
+          </Key>
+          <Property Name="IdPermiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Permiso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios_Permisos" Relationship="PracticaMVC_Model.FK_Usuarios_Permisos_Permisos" FromRole="Permisos" ToRole="Usuarios_Permisos" />
+        </EntityType>
+        <EntityType Name="Usuarios_Permisos">
+          <Key>
+            <PropertyRef Name="IdUsuarioPermiso" />
+          </Key>
+          <Property Name="IdUsuarioPermiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdPermiso" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Permisos" Relationship="PracticaMVC_Model.FK_Usuarios_Permisos_Permisos" FromRole="Usuarios_Permisos" ToRole="Permisos" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Usuarios_Permisos_Usuarios" FromRole="Usuarios_Permisos" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_PerfilesRoles_Perfiles">
+          <End Type="PracticaMVC_Model.Perfiles" Role="Perfiles" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.PerfilesRoles" Role="PerfilesRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="PerfilesRoles">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Permisos_Permisos">
+          <End Type="PracticaMVC_Model.Permisos" Role="Permisos" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios_Permisos" Role="Usuarios_Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="IdPermiso" />
+            </Principal>
+            <Dependent Role="Usuarios_Permisos">
+              <PropertyRef Name="IdPermiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Usuarios_Visitados">
+          <Key>
+            <PropertyRef Name="IdUsuariosVisitados" />
+          </Key>
+          <Property Name="IdUsuariosVisitados" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="NumVisitas" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Usuarios_Visito_Usuarios" FromRole="Usuarios_Visitados" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="FechasCalendario">
+          <Key>
+            <PropertyRef Name="IdFechaCalendario" />
+          </Key>
+          <Property Name="IdFechaCalendario" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_FechasCalendario_Usuarios" FromRole="FechasCalendario" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Notificaciones_Usuarios">
+          <Key>
+            <PropertyRef Name="IdNotificacion" />
+          </Key>
+          <Property Name="IdNotificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuarioGeneroNotif" Type="Int32" />
+          <Property Name="IdUsuarioRecibeNotif" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Mensaje" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Leido" Type="Boolean" />
+          <NavigationProperty Name="Usuarios" Relationship="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios" FromRole="Notificaciones_Usuarios" ToRole="Usuarios" />
+          <NavigationProperty Name="Usuarios1" Relationship="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios1" FromRole="Notificaciones_Usuarios" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IdPerfil" Type="Int32" />
+          <Property Name="IdPerfilRol" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="IdEstatusRegistro" Type="Int32" />
+          <Property Name="ImagenUsuario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EstatusRegistros" Relationship="PracticaMVC_Model.FK_Usuarios_EstatusRegistros" FromRole="Usuarios" ToRole="EstatusRegistros" />
+          <NavigationProperty Name="FechasCalendario" Relationship="PracticaMVC_Model.FK_FechasCalendario_Usuarios" FromRole="Usuarios" ToRole="FechasCalendario" />
+          <NavigationProperty Name="Notificaciones_Usuarios" Relationship="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios" FromRole="Usuarios" ToRole="Notificaciones_Usuarios" />
+          <NavigationProperty Name="Notificaciones_Usuarios1" Relationship="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios1" FromRole="Usuarios" ToRole="Notificaciones_Usuarios" />
+          <NavigationProperty Name="Perfiles" Relationship="PracticaMVC_Model.FK_Usuarios_Perfiles" FromRole="Usuarios" ToRole="Perfiles" />
+          <NavigationProperty Name="PerfilesRoles" Relationship="PracticaMVC_Model.FK_Usuarios_PerfilesRoles" FromRole="Usuarios" ToRole="PerfilesRoles" />
+          <NavigationProperty Name="Usuarios_Permisos" Relationship="PracticaMVC_Model.FK_Usuarios_Permisos_Usuarios" FromRole="Usuarios" ToRole="Usuarios_Permisos" />
+          <NavigationProperty Name="Usuarios_Visitados" Relationship="PracticaMVC_Model.FK_Usuarios_Visito_Usuarios" FromRole="Usuarios" ToRole="Usuarios_Visitados" />
+        </EntityType>
+        <Association Name="FK_Usuarios_EstatusRegistros">
+          <End Type="PracticaMVC_Model.EstatusRegistros" Role="EstatusRegistros" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstatusRegistros">
+              <PropertyRef Name="IdEstatusRegistro" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdEstatusRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FechasCalendario_Usuarios">
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.FechasCalendario" Role="FechasCalendario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="FechasCalendario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificaciones_Usuarios_Usuarios">
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Notificaciones_Usuarios" Role="Notificaciones_Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Notificaciones_Usuarios">
+              <PropertyRef Name="IdUsuarioGeneroNotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notificaciones_Usuarios_Usuarios1">
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Notificaciones_Usuarios" Role="Notificaciones_Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Notificaciones_Usuarios">
+              <PropertyRef Name="IdUsuarioRecibeNotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Type="PracticaMVC_Model.Perfiles" Role="Perfiles" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_PerfilesRoles">
+          <End Type="PracticaMVC_Model.PerfilesRoles" Role="PerfilesRoles" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PerfilesRoles">
+              <PropertyRef Name="IdPerfilRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdPerfilRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Permisos_Usuarios">
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios_Permisos" Role="Usuarios_Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios_Permisos">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Visito_Usuarios">
+          <End Type="PracticaMVC_Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="PracticaMVC_Model.Usuarios_Visitados" Role="Usuarios_Visitados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuarios_Visitados">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PracticaMVC_ModelStoreContainer" CdmEntityContainer="PracticaMVC_Entities">
+          <EntitySetMapping Name="EstatusRegistros">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.EstatusRegistros">
+              <MappingFragment StoreEntitySet="EstatusRegistros">
+                <ScalarProperty Name="EstatusRegistro" ColumnName="EstatusRegistro" />
+                <ScalarProperty Name="IdEstatusRegistro" ColumnName="IdEstatusRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfiles">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Perfiles">
+              <MappingFragment StoreEntitySet="Perfiles">
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PerfilesRoles">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.PerfilesRoles">
+              <MappingFragment StoreEntitySet="PerfilesRoles">
+                <ScalarProperty Name="PerfilRol" ColumnName="PerfilRol" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="IdPerfilRol" ColumnName="IdPerfilRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permisos">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Permisos">
+              <MappingFragment StoreEntitySet="Permisos">
+                <ScalarProperty Name="Permiso" ColumnName="Permiso" />
+                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios_Permisos">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Usuarios_Permisos">
+              <MappingFragment StoreEntitySet="Usuarios_Permisos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioPermiso" ColumnName="IdUsuarioPermiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios_Visitados">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Usuarios_Visitados">
+              <MappingFragment StoreEntitySet="Usuarios_Visitados">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NumVisitas" ColumnName="NumVisitas" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuariosVisitados" ColumnName="IdUsuariosVisitados" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FechasCalendario">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.FechasCalendario">
+              <MappingFragment StoreEntitySet="FechasCalendario">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdFechaCalendario" ColumnName="IdFechaCalendario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notificaciones_Usuarios">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Notificaciones_Usuarios">
+              <MappingFragment StoreEntitySet="Notificaciones_Usuarios">
+                <ScalarProperty Name="Leido" ColumnName="Leido" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdUsuarioRecibeNotif" ColumnName="IdUsuarioRecibeNotif" />
+                <ScalarProperty Name="IdUsuarioGeneroNotif" ColumnName="IdUsuarioGeneroNotif" />
+                <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="PracticaMVC_Model.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ImagenUsuario" ColumnName="ImagenUsuario" />
+                <ScalarProperty Name="IdEstatusRegistro" ColumnName="IdEstatusRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdPerfilRol" ColumnName="IdPerfilRol" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

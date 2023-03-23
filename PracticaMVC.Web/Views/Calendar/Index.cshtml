@@ -1,0 +1,130 @@
+﻿@model PracticaMVC.Web.ViewModels.Listado_CalendarioVM
+
+@{
+    ViewBag.Title = "Agenda Calendario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <span class="active">Agenda Calendario</span>
+            </li>
+        </ul>
+
+        <div class="row widget-row">
+            <div class="col-md-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>Agenda Calendario
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="btn-group dt-left">
+                                        <div class="" align="left" style="width: 100%;">
+
+                                            <div class="" data-container="body" data-html="true" style="width: 100%;">
+                                                <div class="col-lg-1"></div><div class="col-md-11"><label>Para Agregar o visualizar las cita debes seleccionar la Fecha para desplegarte la información deseada</label></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="calendar">
+                            </div>
+                        </div>
+                        <div class="row"><br /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Select2 CSS -->
+        <!-- Select2 -->
+    </div>
+</div>
+
+@section scripts
+{
+    <link href='https://fullcalendar.io/js/fullcalendar-3.3.0/fullcalendar.css' rel='stylesheet' />
+    <link href='https://fullcalendar.io/js/fullcalendar-3.3.0/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'></script>
+    <script src="~/Content/js/fullcalendar.min.js"></script>
+    <script src="~/Content/js/es.js"></script>
+
+    <script type="text/javascript">
+        $(function () { // document ready
+            var starDate;
+            var urlCreate= '@Url.Action("Create", "Calendar")';
+            var urlRedirect = '@Url.Action("Details", "Calendar")';
+            var urlGet = '@Url.Action("GetListDateCalendar", "Calendar")';
+            var intervalStart, intervalEnd;
+            $('#calendar').fullCalendar(
+                {
+                    lang: 'Es',
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    selectable: true,
+                    longPressDelay: 1,
+                    select: function (start, end, jsEvent, view) {
+                        location.href = urlCreate + "?Date=" + moment(start).format('DDMMYYYY-HHmmss');
+                    },
+                    selectHelper: false,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        console.log(calEvent)
+                        location.href = urlRedirect + "?Id=" + calEvent.id;
+                    },
+                    editable: true,
+                    eventLimit: true,
+                    viewRender: function (view, element) {
+                        intervalStart = view.intervalStart;
+                        intervalEnd = view.intervalEnd;
+                    },
+                    events: function (start, end, timezone, callback) {
+                        $.ajax({
+                            url: urlGet,
+                            data: { MM: (intervalStart).format('MM'), YYYY: (intervalStart).format('YYYY') },
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (e) {
+                                console.log(JSON.parse(e));
+                                callback(JSON.parse(e));
+                            }
+                        });
+                    }
+                });
+        });
+    </script>
+    <style>
+        #calendar {
+            max-width: 1200px !important;
+            margin: 0 auto;
+        }
+
+            #calendar th {
+                height: 35px !important;
+            }
+
+            #calendar td {
+                height: 35px !important;
+            }
+    </style>
+}

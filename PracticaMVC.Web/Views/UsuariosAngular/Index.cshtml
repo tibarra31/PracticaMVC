@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Administración de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-content-wrapper" ng-app="appUsuarios" ng-controller="ctrlUsuarios">
+    <div class="page-content">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li>
+                <span class="active">{{titulo}}</span>
+            </li>
+        </ul>
+
+        <div class="row widget-row">
+            <div class="col-md-12">
+                <div class="portlet box dark">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>{{titulo}}
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-toolbar">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn sbold dark margin-right-10 " onclick="location.href='@Url.Action("Detalle")'">
+                                        Agregar
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <button name="control" ng-click="getDataInfo();" class="btn sbold grey margin-right-10">
+                                        Buscar
+                                        <i class="fa fa-filter"></i>
+                                    </button>
+                                    <button type="button" class="btn default grey" onclick="location.href='@Url.Action("Index", "Home")'">
+                                        Regresar
+                                        <i class="fa fa-chevron-circle-left"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input form-md-floating-label has-success" style="margin-bottom: 0px !important;">
+                                        <label style="font-size: small;">Filtro Usuario</label>
+                                        <input ng-model="filtroUsuarios" class="form-control"  /><br />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12 table-responsive">
+                                    <div class="gridStyle" ng-grid="gridUsuarios"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/ClientApp/controllerUsuarios.js"></script>
+
+
+}

@@ -1,0 +1,15 @@
+﻿@model PracticaMVC.Web.ViewModels.Detalle_UsuariosPermisosVM
+
+<div class="col-md-3">
+    @Html.LabelFor(model => model.Permiso, htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(x => Model.IdPermiso, new SelectList(Model.PermisosUsuarios, "Valor", "Texto", Model.IdPermiso),
+                htmlAttributes: new { @class = "form-control", @id = "ddlPermiso" })
+    @Html.ValidationMessageFor(model => model.IdPermiso, "", new { @class = "text-danger" })
+</div>
+<div class="col-md-2">
+    <label class="control-label" style="width:100%">&nbsp;</label>
+    <button id="BtnGuardarProductor" type="button" class="btn dark tooltips" data-container="body" data-toggle="tooltip"
+            data-original-title="Guardar Permiso" onclick="GuardarPermiso();">
+        <i class="fa fa-save"></i>
+    </button>
+</div>

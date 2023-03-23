@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="560f5746e59b4fc1a71e0d8f35b06025" Name="Diagram1">
+        <EntityTypeShape EntityType="PracticaMVC_Model.EstatusRegistros" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Perfiles" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.PerfilesRoles" Width="1.5" PointX="3" PointY="1.5" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Permisos" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Usuarios_Permisos" Width="1.5" PointX="7.5" PointY="1.5" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_PerfilesRoles_Perfiles" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_Permisos_Permisos" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Usuarios_Visitados" Width="1.5" PointX="7.5" PointY="4.625" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.FechasCalendario" Width="1.5" PointX="7.5" PointY="7.625" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Notificaciones_Usuarios" Width="1.5" PointX="7.5" PointY="10.625" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="9.125" />
+        <EntityTypeShape EntityType="PracticaMVC_Model.Usuarios" Width="1.5" PointX="5.625" PointY="0.75" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_EstatusRegistros" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_FechasCalendario_Usuarios" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Notificaciones_Usuarios_Usuarios1" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_Perfiles" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_PerfilesRoles" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_Permisos_Usuarios" />
+        <AssociationConnector Association="PracticaMVC_Model.FK_Usuarios_Visito_Usuarios" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

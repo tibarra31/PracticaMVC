@@ -1,0 +1,11 @@
+﻿@model Dictionary<string, string[]>
+
+@if (Model != null)
+{
+    foreach (var message in Model)
+    {
+        <script>
+            ShowNotificacion('@message.Key','@message.Value[0]','@message.Value[1]','@message.Value[2]','@message.Value[3]')
+        </script>
+    }
+}

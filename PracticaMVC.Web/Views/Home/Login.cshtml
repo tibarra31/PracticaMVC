@@ -1,0 +1,67 @@
+﻿@model PracticaMVC.Web.ViewModels.InicioSesionVM
+
+@{
+    Layout = null;
+    ViewBag.Title = "Inicio de Sesión";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Practica MVC </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1024">
+    <meta content="Practica MVC" name="description" />
+    <meta content="Practica MVC" name="author" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/components-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/login.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/toastr.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/custom.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="login">
+    <div class="logo">
+        @*<img src="~/Content/images/logoBS_blanco.png" alt="LOGO" style="height:auto; width:360px;" />*@
+    </div>
+
+    <div class="content">
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post, htmlAttributes: new { @class = "" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <h3 class="form-title" style="color:black;">Iniciar Sesión</h3>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span>Ingresa un usuario y contraseña válidos. </span>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(a => a.Usuario, htmlAttributes: new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(a => a.Usuario, htmlAttributes: new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Usuario", @autocomplete = "off" })
+                @Html.ValidationMessageFor(a => a.Usuario, null, htmlAttributes: new { @style = "color:red !important; font-style:italic;" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(a => a.Contrasena, htmlAttributes: new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.PasswordFor(a => a.Contrasena, htmlAttributes: new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Contraseña" })
+                @Html.ValidationMessageFor(a => a.Contrasena, null, htmlAttributes: new { @style = "color:red !important; font-style:italic;" })
+            </div>
+            <div class="form-actions text-center">
+                <input type="submit" value="Entrar al sitio" class="btn uppercase" style="background-color:#FA1600 !important; color:white !important;" />
+                <br /><br />
+            </div>
+        }
+    </div>
+    <div class="copyright">
+        Copyright © @Html.Label(DateTime.Now.Year.ToString()) Practica MVC | Todos los derechos reservados
+    </div>
+
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/toastr.min.js"></script>
+    <script src="~/Content/js/ui-toastr.js"></script>
+    <script src="~/Content/js/Notifications.js"></script>
+
+    <!-- Añadirlo después de la librería toastr -->
+    @Html.Partial("_Messages", (Dictionary<string, string[]>)TempData["messages"])
+</body>
+</html>
