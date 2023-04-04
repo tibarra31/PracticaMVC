@@ -1,7 +1,7 @@
 var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ngLocale']);
 //Directiva modificada con comentario
-//para el proyecto principal de Github
-//12 
+//Productivo
+//22256544
 app.directive('smModal', function () {
 	return {
 		restrict: 'E',
@@ -85,4 +85,5 @@ app.directive('smModal', function () {
 		}
 	};
 });
+
 
