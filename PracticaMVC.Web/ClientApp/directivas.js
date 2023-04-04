@@ -1,7 +1,7 @@
-﻿var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ngLocale']);
+var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ngLocale']);
 //Directiva modificada con comentario
 //para el proyecto principal de Github
-//12
+//12 
 app.directive('smModal', function () {
 	return {
 		restrict: 'E',
