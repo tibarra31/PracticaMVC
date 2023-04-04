@@ -1,5 +1,7 @@
 ﻿var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ngLocale']);
 //Directiva modificada con comentario
+//Productivo
+//22256544
 app.directive('smModal', function () {
 	return {
 		restrict: 'E',
